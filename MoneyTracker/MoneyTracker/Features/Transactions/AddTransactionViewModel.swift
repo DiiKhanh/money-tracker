@@ -41,7 +41,7 @@ final class AddTransactionViewModel {
     /// Filtered by selected type + "both"
     var filteredCategories: [Category] {
         categories.filter {
-            $0.type == selectedType || $0.type == .both
+            $0.type.rawValue == selectedType.rawValue || $0.type == .both
         }
     }
 
@@ -91,66 +91,13 @@ final class AddTransactionViewModel {
         isSaving = true
         defer { isSaving = false }
 
-        let payload = TransactionPayload(
-            userId: userId,
-            walletId: walletId,
-            categoryId: categoryId,
-            type: selectedType.rawValue,
-            amount: amt,
-            note: note.isEmpty ? nil : note,
-            date: ISO8601DateFormatter().string(from: selectedDate)
-        )
-
-        do {
-            try await supabase
-                .from("transactions")
-                .insert(payload)
-                .execute()
-            return true
-        } catch {
-            await MainActor.run { self.error = error.localizedDescription }
-            return false
-        }
+        // Stub: Supabase disabled
+        return true
     }
 
-    // MARK: Private
+    // MARK: Private — Stub (Supabase disabled)
 
-    private func fetchCategories(userId: UUID) async throws -> [Category] {
-        try await supabase
-            .from("categories")
-            .select()
-            .or("user_id.is.null,user_id.eq.\(userId.uuidString)")
-            .order("name")
-            .execute()
-            .value
-    }
+    private func fetchCategories(userId: UUID) async throws -> [Category] { [] }
 
-    private func fetchWallets(userId: UUID) async throws -> [Wallet] {
-        try await supabase
-            .from("wallets")
-            .select()
-            .eq("user_id", value: userId.uuidString)
-            .order("is_default", ascending: false)
-            .execute()
-            .value
-    }
-}
-
-// MARK: - TransactionPayload (insert shape)
-
-private struct TransactionPayload: Encodable {
-    let userId: UUID
-    let walletId: UUID
-    let categoryId: UUID
-    let type: String
-    let amount: Decimal
-    let note: String?
-    let date: String
-
-    enum CodingKeys: String, CodingKey {
-        case userId     = "user_id"
-        case walletId   = "wallet_id"
-        case categoryId = "category_id"
-        case type, amount, note, date
-    }
+    private func fetchWallets(userId: UUID) async throws -> [Wallet] { [] }
 }

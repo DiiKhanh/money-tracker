@@ -13,12 +13,7 @@ struct MoneyTrackerApp: App {
             RootView()
                 .environment(authService)
                 .preferredColorScheme(.dark)  // Force dark mode — OLED-first design
-                .onOpenURL { url in
-                    // Handle OAuth redirect: moneytracker://auth/callback
-                    Task {
-                        try? await supabase.auth.session(from: url)
-                    }
-                }
+                // onOpenURL: OAuth redirect — re-enable when Supabase is connected
         }
     }
 }

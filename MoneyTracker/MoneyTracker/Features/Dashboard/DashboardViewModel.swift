@@ -84,38 +84,13 @@ final class DashboardViewModel {
         }
     }
 
-    // MARK: Private — Supabase calls
+    // MARK: Private — Stub (Supabase disabled)
 
-    private func fetchWallets(userId: UUID) async throws -> [Wallet] {
-        try await supabase
-            .from("wallets")
-            .select()
-            .eq("user_id", value: userId.uuidString)
-            .order("is_default", ascending: false)
-            .execute()
-            .value
-    }
+    private func fetchWallets(userId: UUID) async throws -> [Wallet] { [] }
 
-    private func fetchRecentTransactions(userId: UUID) async throws -> [Transaction] {
-        try await supabase
-            .from("transactions")
-            .select()
-            .eq("user_id", value: userId.uuidString)
-            .order("date", ascending: false)
-            .order("created_at", ascending: false)
-            .limit(20)
-            .execute()
-            .value
-    }
+    private func fetchRecentTransactions(userId: UUID) async throws -> [Transaction] { [] }
 
-    private func fetchCategories(userId: UUID) async throws -> [Category] {
-        try await supabase
-            .from("categories")
-            .select()
-            .or("user_id.is.null,user_id.eq.\(userId.uuidString)")
-            .execute()
-            .value
-    }
+    private func fetchCategories(userId: UUID) async throws -> [Category] { [] }
 
     // MARK: Helpers
 

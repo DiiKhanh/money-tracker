@@ -521,7 +521,7 @@ private extension Date {
         } else if cal.isDateInYesterday(self) {
             return "Hôm qua, " + formatted(.dateTime.hour().minute())
         }
-        return formatted(.dateTime.day().month("abbreviated"))
+        return formatted(.dateTime.day().month(.abbreviated))
     }
 }
 
