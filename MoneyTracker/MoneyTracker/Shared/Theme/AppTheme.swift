@@ -116,6 +116,25 @@ enum AppAnimation {
     static let countUp  = Animation.easeOut(duration: 0.8)
 }
 
+// MARK: - Shimmer Loading Modifier
+
+private struct ShimmerModifier: ViewModifier {
+    @State private var phase = false
+
+    func body(content: Content) -> some View {
+        content
+            .opacity(phase ? 0.4 : 1)
+            .animation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true), value: phase)
+            .onAppear { phase = true }
+    }
+}
+
+extension View {
+    func shimmer() -> some View {
+        modifier(ShimmerModifier())
+    }
+}
+
 // MARK: - Haptics
 enum Haptic {
     static func success() {

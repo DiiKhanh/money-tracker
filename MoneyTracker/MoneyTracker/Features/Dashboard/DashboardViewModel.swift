@@ -73,6 +73,7 @@ final class DashboardViewModel {
                 self.wallets = w
                 self.recentTransactions = t
                 self.categories = c
+                self.budgetProgress = MockData.budgetProgress
                 if self.selectedWalletId == nil {
                     self.selectedWalletId = w.first(where: { $0.isDefault })?.id ?? w.first?.id
                 }
@@ -86,11 +87,18 @@ final class DashboardViewModel {
 
     // MARK: Private — Stub (Supabase disabled)
 
-    private func fetchWallets(userId: UUID) async throws -> [Wallet] { [] }
+    private func fetchWallets(userId: UUID) async throws -> [Wallet] {
+        try await Task.sleep(for: .milliseconds(300))
+        return MockData.wallets
+    }
 
-    private func fetchRecentTransactions(userId: UUID) async throws -> [Transaction] { [] }
+    private func fetchRecentTransactions(userId: UUID) async throws -> [Transaction] {
+        MockData.transactions
+    }
 
-    private func fetchCategories(userId: UUID) async throws -> [Category] { [] }
+    private func fetchCategories(userId: UUID) async throws -> [Category] {
+        MockData.categories
+    }
 
     // MARK: Helpers
 

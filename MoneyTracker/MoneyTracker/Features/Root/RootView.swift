@@ -69,11 +69,10 @@ struct MainTabView: View {
                 TransactionListView()
                     .tag(AppTab.transactions)
 
-                // Placeholder for Add (center FAB)
-                Color.bgBase
+                BudgetView()
                     .tag(AppTab.budget)
 
-                Color.bgBase
+                ChartsView()
                     .tag(AppTab.charts)
 
                 SettingsView()
@@ -157,37 +156,6 @@ struct MainTabView: View {
             }
         }
         .frame(maxWidth: .infinity)
-    }
-}
-
-// MARK: - Placeholder Views (to be implemented)
-
-struct TransactionListView: View {
-    var body: some View {
-        ZStack {
-            Color.bgBase.ignoresSafeArea()
-            Text("Giao dịch — Coming soon")
-                .foregroundStyle(Color.textSecondary)
-        }
-    }
-}
-
-struct SettingsView: View {
-    @Environment(AuthService.self) private var auth
-
-    var body: some View {
-        ZStack {
-            Color.bgBase.ignoresSafeArea()
-            VStack(spacing: Spacing.xxl) {
-                Text("Cài đặt")
-                    .font(.largeTitle.bold())
-                    .foregroundStyle(Color.textPrimary)
-                DestructiveButton(title: "Đăng xuất") {
-                    Task { try? await auth.signOut() }
-                }
-                .padding(.horizontal, Spacing.lg)
-            }
-        }
     }
 }
 

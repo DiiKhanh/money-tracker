@@ -32,9 +32,8 @@ struct DashboardView: View {
                 }
             }
             .task {
-                if let uid = auth.currentUser?.id {
-                    await vm.fetchAll(userId: uid)
-                }
+                let uid = auth.currentUser?.id ?? MockData.userId
+                await vm.fetchAll(userId: uid)
             }
             .sheet(isPresented: $showAddTransaction) {
                 AddTransactionView()

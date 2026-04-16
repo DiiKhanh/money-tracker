@@ -97,7 +97,7 @@ final class AddTransactionViewModel {
 
     // MARK: Private — Stub (Supabase disabled)
 
-    private func fetchCategories(userId: UUID) async throws -> [Category] { [] }
+    private func fetchCategories(userId: UUID) async throws -> [Category] { MockData.categories }
 
-    private func fetchWallets(userId: UUID) async throws -> [Wallet] { [] }
+    private func fetchWallets(userId: UUID) async throws -> [Wallet] { MockData.wallets }
 }
